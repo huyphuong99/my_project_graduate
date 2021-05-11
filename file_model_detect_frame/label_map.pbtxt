@@ -1,0 +1,21 @@
+item {
+      name: "card"
+      id: 1
+      display_name: "card"
+      keypoints {
+        id: 0
+        label: 'top_left'
+      }
+      keypoints {
+        id: 1
+        label: 'top_right'
+      }
+      keypoints {
+        id: 2
+        label: 'bottom_right'
+      }
+      keypoints {
+        id: 3
+        label: 'bottom_left'
+      }
+    }
