@@ -1,4 +1,4 @@
-""" usage: partition_dataset_1.py [-h] [-i IMAGEDIR] [-o OUTPUTDIR] [-r RATIO] [-x]
+""" usage: partition_dataset.py [-h] [-i IMAGEDIR] [-o OUTPUTDIR] [-r RATIO] [-x]
 
 Partition dataset of images into training and testing sets
 
@@ -38,13 +38,13 @@ def iterate_dir(source, dest, ratio, copy_xml):
     num_test_images = math.ceil(ratio*num_images)
 
     for i in range(num_test_images):
+        idx = random.randint(0, len(images)-1)
+        filename = images[idx]
+        copyfile(os.path.join(source, filename),
+                 os.path.join(test_dir, filename))
         try:
-            idx = random.randint(0, len(images)-1)
-            filename = images[idx]
-            copyfile(os.path.join(source, filename),
-                     os.path.join(test_dir, filename))
             if copy_xml:
-                xml_filename = os.path.splitext(filename)[0]+'.json'
+                xml_filename = os.path.splitext(filename)[0]+'.xml'
                 copyfile(os.path.join(source, xml_filename),
                          os.path.join(test_dir,xml_filename))
             images.remove(images[idx])
@@ -52,11 +52,11 @@ def iterate_dir(source, dest, ratio, copy_xml):
             pass
 
     for filename in images:
+        copyfile(os.path.join(source, filename),
+                 os.path.join(train_dir, filename))
         try:
-            copyfile(os.path.join(source, filename),
-                     os.path.join(train_dir, filename))
             if copy_xml:
-                xml_filename = os.path.splitext(filename)[0]+'.json'
+                xml_filename = os.path.splitext(filename)[0]+'.xml'
                 copyfile(os.path.join(source, xml_filename),
                          os.path.join(train_dir, xml_filename))
         except:
@@ -102,3 +102,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    print('done')
