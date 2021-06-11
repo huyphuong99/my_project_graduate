@@ -3,7 +3,6 @@ from object_detection.utils import config_util
 from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as viz_utils
 from PIL import Image
-from builtins import str
 import tensorflow as tf
 import os
 import numpy as np

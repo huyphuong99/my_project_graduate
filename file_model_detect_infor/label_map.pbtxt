@@ -1,0 +1,66 @@
+item {
+    id: 1
+    name: "ID"
+}
+
+item {
+    id: 2
+    name: "ADDRESS"
+}
+
+item {
+    id: 3
+    name: "BIRTHDAY"
+}
+
+item {
+    id: 4
+    name: "NAME"
+}
+
+item {
+    id: 5
+    name: "TITLE"
+}
+
+item {
+    id: 6
+    name: "DOMICILE"
+}
+
+item {
+    id: 7
+    name: "COUNTRY"
+}
+
+item {
+    id: 8
+    name: "ETHNICITY"
+}
+
+item {
+    id: 9
+    name: "SEX"
+}
+
+item {
+    id: 10
+    name: "EXPIRY"
+}
+
+item {
+    id: 11
+    name: "ISSUE BY"
+}
+
+item {
+    id: 12
+    name: "ISSUE DATE"
+}
+
+item {
+    id: 13
+    name: "RELIGION"
+}
+
+

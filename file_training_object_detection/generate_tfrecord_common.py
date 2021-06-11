@@ -135,33 +135,26 @@ def _create_tf_record(annotation_file: str,
 
 
 if __name__ == '__main__':
-    project = ''
-    data_name = ''
-    data_type = ''
-    file = "test"
-    file_ano = f"annotation_{file}.txt"
-    label_source = LabelSource.LABEL_ME
-    image_dir = f"/home/huyphuong99/PycharmProjects/project_graduate/id_data_raw_label/{file}"
-    workdir = '/home/huyphuong99/PycharmProjects/project_graduate/model/annotations'
+    file = "train_new_front"
+    file_ano = f"{file}.txt"
+    label_source = LabelSource.LABEL_VOC
+    image_dir = f"/home/huyphuong/Desktop/material/project_tima/info_id_do_an/raw_image/raw_new_image/cropped/p_data_partition/{file}"
+    workdir = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/raw_image/raw_new_image/cropped/p_file_nessesary"
     include_keypoint = True if label_source == LabelSource.LABEL_ME else False
     num_shards = 1
-    annotation_file = os.path.join(
-        "/home/huyphuong99/PycharmProjects/project_graduate/id_data_raw_label", project,
-        f'{file_ano}')
-    label_names_file = os.path.join(workdir, project, 'label_map.pbtxt')
-    output_path = os.path.join(workdir, project, f'{file}.record')
+    annotation_file = os.path.join(workdir, f"file_annotation/{file_ano}")
+    label_names_file = os.path.join(workdir, "label_map.pbtxt")
+    output_path = os.path.join(workdir, f'file_record/{file}.record')
 
-    print(
-        "===========================================================================================================")
-    print(f"Project:\t\t{project}")
-    print(f"Data:\t\t{data_name}")
-    print(f"Data_type:\t\t{data_type}")
+    print("===========================================================================================================")
+    print(f"Project:")
+    print(f"Data:\t\t")
+    print(f"Data_type:\t\t")
     print(f"Label source:\t\t{label_source}")
     print(f"Keypoint:\t\t{include_keypoint}")
     print(f"Image Dir:\t\t{image_dir}")
     print(f"Output:\t\t{num_shards} shards. At: {output_path}")
-    print(
-        "===========================================================================================================")
+    print("===========================================================================================================")
 
     _create_tf_record(
         annotation_file=annotation_file,
