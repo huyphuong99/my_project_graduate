@@ -11,7 +11,7 @@ from object_detection.builders import model_builder
 from object_detection.utils import label_map_util
 from object_detection.utils import config_util
 from object_detection.utils import visualization_utils as viz_utils
-from crop_box_from_image import four_point_transform
+from file_training_object_detection.crop_box_from_image import four_point_transform
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 warnings.filterwarnings('ignore')
