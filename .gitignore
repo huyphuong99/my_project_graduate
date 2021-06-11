@@ -1,4 +1,10 @@
 file_model_detect_frame/checkpoint/
+file_model_detect_infor/checkpoint/
+recognition/weights/
+
 .idea/
 *.zip
 *.tar.gz
+*.h5
+*weights/
+*checkpoint/
