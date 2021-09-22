@@ -5,8 +5,8 @@ import cv2
 import requests
 import ast
 import  time
-path_img = "/home/huyphuong99/PycharmProjects/project_totnghiep/temp_compress/temp/*"
-out_path_front = "/home/huyphuong99/PycharmProjects/project_totnghiep/temp_compress/ouput/front/"
+path_img = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/data_raw/raw_image/raw_image/raw_image/*"
+out_path_front = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/data_raw/raw_image/raw_image/cropped_raw_image/"
 out_path_back = "/home/huyphuong99/PycharmProjects/project_totnghiep/temp_compress/ouput/back/"
 out_card_front = "/home/huyphuong99/PycharmProjects/project_totnghiep/temp_compress/ouput/card/front/"
 out_card_back = "/home/huyphuong99/PycharmProjects/project_totnghiep/temp_compress/ouput/card/back/"

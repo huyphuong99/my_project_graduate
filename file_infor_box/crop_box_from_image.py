@@ -6,19 +6,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 import traceback
 
-root_images = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/raw_image/raw_new_image/new_cccd/back/"
-root_ouput = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/raw_image/raw_new_image/cropped/cropped_back/"
+root_images = "/media/huyphuong/huyphuong99/tima/project/id/project_tima/info_id_do_an/data_raw/raw_image/raw_new_image/new_cccd_270721"
+root_ouput = "/media/huyphuong/huyphuong99/tima/project/id/project_tima/info_id_do_an/data_raw/raw_image/raw_new_image/cropped_new_cccd_270721"
 
 
-def order_point(pts):
-    rect = np.zeros((4, 2), dtype='float32')
-    s = pts.sum(axis=1)
-    rect[0] = pts[np.argmin(s)]
-    rect[2] = pts[np.argmax(s)]
-    diff = np.diff(pts, axis=1)
-    rect[1] = pts[np.argmin(diff)]
-    rect[3] = pts[np.argmax(diff)]
-    return rect
+# def order_point(pts):
+#     rect = np.zeros((4, 2), dtype='float32')
+#     s = pts.sum(axis=1)
+#     rect[0] = pts[np.argmin(s)]
+#     rect[2] = pts[np.argmax(s)]
+#     diff = np.diff(pts, axis=1)
+#     rect[1] = pts[np.argmin(diff)]
+#     rect[3] = pts[np.argmax(diff)]
+#     return rect
 
 
 def four_point_transform(img, pts):
@@ -38,21 +38,21 @@ def four_point_transform(img, pts):
 
 
 i = 0
-for file in glob.glob(root_images + "*.json"):
+for file in glob.glob(os.path.join(root_images, "*.json")):
     try:
         file_name = os.path.basename(file)
         with open(file, 'r') as f:
             label = json.load(f)
         file_name = file_name.replace(".json", ".jpg")
-        img = cv2.imread(root_images+file_name)
+        img = cv2.imread(os.path.join(root_images,file_name))
 
         if img is None:
             file_name = file_name.replace(".jpg", ".jpeg")
-            img = cv2.imread(root_images + file_name)
+            img = cv2.imread(os.path.join(root_images, file_name))
 
         cnt = np.array(label['shapes'][0]['points'], dtype='float32')
         wraped = four_point_transform(img, cnt)
-        cv2.imwrite(f"{root_ouput}cr_{file_name}", wraped)
+        cv2.imwrite(f"{root_ouput}/cr_{file_name}", wraped)
 
     except Exception as e:
         print(e)

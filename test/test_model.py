@@ -1,6 +1,6 @@
 import csv
 import shutil
-from builtins import int
+from builtins import int, print
 
 import pandas
 from recognition.model_ocr import Model
@@ -12,7 +12,7 @@ import time
 
 vocab_DAY = ['.', '-', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 (img_h_DAY, img_w_DAY, max_len_DAY) = (40, 210, 10)
-path_model_BIRTHDAY = "/home/huyphuong/PycharmProjects/project_graduate/recognition/weights/DATE_010621_ver3_99.35%.h5"
+path_model_BIRTHDAY = "/home/huyphuong/PycharmProjects/project_graduate/recognition/weights/DATE_010621_ver3_final.h5"
 model_BIRTHDAY = Model(vocab_DAY, img_w_DAY, img_h_DAY, max_len_DAY, path_model_BIRTHDAY)
 
 vocab_ADDRESS = ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', '0',
@@ -34,8 +34,8 @@ vocab_ADDRESS = ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-'
 (img_h_ADDRESS, img_w_ADDRESS, max_len_ADDRESS) = (40, 160, 12)
 path_model_ADDRESS = "/home/huyphuong/PycharmProjects/project_graduate/recognition/weights/ADDRESS.h5"
 model_ADDRESS = Model(vocab_ADDRESS, img_w_ADDRESS, img_h_ADDRESS, max_len_ADDRESS, path_model_ADDRESS)
-path = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/data_raw/raw_image/raw_new_image/cropped/infor_cropped/DATE_0406"
-path_csv = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/data_raw/raw_image/raw_new_image/cropped/infor_cropped/DATE_0406.csv"
+path = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/data_raw/raw_image/raw_new_image/cropped/infor_cropped/DOMICILE_180621"
+path_csv = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/data_raw/raw_image/raw_new_image/cropped/infor_cropped/DOMICILE_180621.csv"
 
 vocab_ID = "0123456789"
 (img_h_ID, img_w_ID, max_len_ID) = (50, 250, 12)
@@ -65,58 +65,65 @@ def to_csv_day():
             print(f"Name: {name}| Label: {list_label}| Predict: {infor}")
     print(time.time() - st)
 
-
-# path_add = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/recoginition/DC_TG_GT_DT/ADDRESS"
-# path_add_out = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/recoginition/DC_TG_GT_DT/ADDRESS_WRONG"
-# path_add_csv = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/recoginition/DC_TG_GT_DT/ADDRESS.csv"
-# path_add_out_csv = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/recoginition/DC_TG_GT_DT/file_add.csv"
 path_img_id = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/recoginition/ID"
 path_img_id_csv = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/recoginition/ID.csv"
 
-path_img_name = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/recoginition/NAME"
-path_img_name_csv = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/recoginition/NAME.csv"
+path_img_name = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/data_raw/raw_image/raw_image/cropped_id_front/cropped_infor_front/DOMICILE_180621"
+path_img_name_csv = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/data_raw/raw_image/raw_image/cropped_id_front/cropped_infor_front/DOMICILE_180621.csv"
 def run_model(model, path_img, path_csv):
-    path_name_out = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/recoginition/NAME_WRONG"
     df = pandas.read_csv(path_csv, dtype={"label": str})
     label = df['label']
-    i = 0
-    for f in glob.glob(f"{path_img}/*"):
-        img = cv2.imread(f)
-        name = os.path.basename(f)
-        infor = model_NAME.run(img)
-        if  len(df[df['filename'] == f"{name}"].index.values) != 0:
-            index = df[df['filename'] == f"{name}"].index.values[0]
-        if f"{label[index]}" != f"{infor}":
-            i += 1
-            shutil.move(f"{path_img}/{name}", f"{path_name_out}/{name}")
-            print(f"Name: {name}___{i}, Label: {label[index]}, Predict: {infor}")
-run_model(model_NAME, path_img_name, path_img_name_csv)
-
-def move_file_add_wrong():
-    df = pandas.read_csv(path_add_csv)
-    label = df["label"]
-    df_new = pandas.read_csv(path_add_out_csv, header=0)
-    print(df_new.columns)
-    label_new = df_new['label']
-    i = 0
-    for _file in glob.glob(f"{path_add_out}/*"):
-        name = os.path.basename(_file)
+    filename = df['filename']
+    confidence = df['conf']
+    print(df)
+    for i, f in enumerate(filename):
+        f = os.path.basename(f)
+        img = cv2.imread(f"{path_img}/{f}")
         try:
-            index_name_new = df_new[df_new['filename'] == f'{name}'].index.values[0]
-            index_name = df[df['filename']== f'{name}'].index.values[0]
-            label_new[index_name_new] = label[index_name]
-            print(label_new[index_name_new])
-            # img = cv2.imread(_file)
-            # infor = model_ADDRESS.run(img)
-            # if label[index_name] != infor:
-            #     i += 1
-            #     print(f'{label[index_name]} | {infor}')
-            #     shutil.move(f"{path_add}/{name}", f"{path_add_out}/{name}")
+            infor, acc = model.run(img)
+            # print(acc)
+            mean_acc = np.mean(acc)
+            label[i] = infor
+            confidence[i] = mean_acc
+            print(label[i], confidence[i])
+            break
         except:
-            i += 1
-            print(name)
-            # raise
-    df_new.to_csv(path_add_out_csv, index=False, quoting=csv.QUOTE_ALL)
-    print(i)
+            print(f)
+    df.to_csv(path_img_name_csv, index=False, quoting=csv.QUOTE_ALL)
+        # if  len(df[df['filename'] == f"{name}"].index.values) != 0:
+        #     index = df[df['filename'] == f"{name}"].index.values[0]
+
+        # if f"{label[index]}" != f"{infor}":
+        #     i += 1
+            # shutil.move(f"{path_img}/{name}", f"{path_name_out}/{name}")
+            # print(f"Name: {name}___{i}, Label: {label[index]}, Predict: {infor}")
+run_model(model_ADDRESS, path_img_name, path_img_name_csv)
+
+# def move_file_add_wrong():
+#     df = pandas.read_csv(path_add_csv)
+#     label = df["label"]
+#     df_new = pandas.read_csv(path_add_out_csv, header=0)
+#     print(df_new.columns)
+#     label_new = df_new['label']
+#     i = 0
+#     for _file in glob.glob(f"{path_add_out}/*"):
+#         name = os.path.basename(_file)
+#         try:
+#             index_name_new = df_new[df_new['filename'] == f'{name}'].index.values[0]
+#             index_name = df[df['filename']== f'{name}'].index.values[0]
+#             label_new[index_name_new] = label[index_name]
+#             print(label_new[index_name_new])
+#             # img = cv2.imread(_file)
+#             # infor = model_ADDRESS.run(img)
+#             # if label[index_name] != infor:
+#             #     i += 1
+#             #     print(f'{label[index_name]} | {infor}')
+#             #     shutil.move(f"{path_add}/{name}", f"{path_add_out}/{name}")
+#         except:
+#             i += 1
+#             print(name)
+#             # raise
+#     df_new.to_csv(path_add_out_csv, index=False, quoting=csv.QUOTE_ALL)
+#     print(i)
 # move_file_add_wrong()
 # df.to_csv(path_csv, index=False)

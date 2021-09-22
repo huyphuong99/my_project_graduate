@@ -135,11 +135,11 @@ def _create_tf_record(annotation_file: str,
 
 
 if __name__ == '__main__':
-    file = "train_new_front"
+    file = "cropped_front_back_test"
     file_ano = f"{file}.txt"
     label_source = LabelSource.LABEL_VOC
-    image_dir = f"/home/huyphuong/Desktop/material/project_tima/info_id_do_an/raw_image/raw_new_image/cropped/p_data_partition/{file}"
-    workdir = "/home/huyphuong/Desktop/material/project_tima/info_id_do_an/raw_image/raw_new_image/cropped/p_file_nessesary"
+    image_dir = f"/media/huyphuong/huyphuong99/tima/project/id/project_tima/info_id_do_an/data_raw/raw_image/raw_new_image/cropped_new_cccd_270721/partion_data/{file}"
+    workdir = "/media/huyphuong/huyphuong99/tima/project/id/project_tima/info_id_do_an/data_raw/raw_image/raw_new_image/cropped_new_cccd_270721/file_nessesary"
     include_keypoint = True if label_source == LabelSource.LABEL_ME else False
     num_shards = 1
     annotation_file = os.path.join(workdir, f"file_annotation/{file_ano}")
