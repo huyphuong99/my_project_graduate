@@ -249,9 +249,9 @@ def crop_img(image, coordinate, ratio=1 / 30.0):
 
 # coordinates
 # [[(x_min, y_min), (x_max, y_max)],[]...]
-def detect_box(raw_img: np.ndarray, coordinates: list[tuple], ratio):
+def detect_box(raw_img: np.ndarray, boxes: list[tuple], ratio):
     # raw_img = cv2.imread(path)
-    boxes = sorted(coordinates, key=lambda x: x[1])
+    # boxes = sorted(coordinates, key=lambda x: x[1])
     label = {0: "id", 1: "fullname", 2: "birthday"}
     dict_label = {}
     for i, box in enumerate(boxes):
@@ -280,10 +280,8 @@ def crop_image_check_fraud(image_cr, box_info, label, ratio):
                 info[lb].append(box_info[i])
     t = sorted(info["NAME"], key=lambda x: x[0][0])
     info["NAME"] = [t[0][0], t[-1][-1]]
-    # print(t)
-    # print(info)
-    list_info = [info["NAME"], info["ID"], info["BIRTHDAY"]]
-    print(list_info)
+    print(info)
+    list_info = [info["ID"],info["NAME"], info["BIRTHDAY"]]
     temp = detect_box(image_cr, list_info, ratio)
     return info
 
