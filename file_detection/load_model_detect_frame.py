@@ -109,8 +109,8 @@ def draw_box_to_image(image_np_with_detections, detections, category_index, keyp
     # cv2.imshow("name",image)
     # cv2.waitKey()
 
-    # cv2.imshow(name, image)
-    # cv2.waitKey()
+    cv2.imshow(name, image)
+    cv2.waitKey()
 
 
 def run(IMAGE_PATHS, detection_model, category_index, name=None):
@@ -280,10 +280,11 @@ def crop_image_check_fraud(image_cr, box_info, label, ratio):
                 info[lb].append(box_info[i])
     t = sorted(info["NAME"], key=lambda x: x[0][0])
     info["NAME"] = [t[0][0], t[-1][-1]]
+    info["image"] = image_cr
     print(info)
     list_info = [info["ID"],info["NAME"], info["BIRTHDAY"]]
     temp = detect_box(image_cr, list_info, ratio)
-    return info
+    return temp
 
 
 def explore_dict_image(dict_image: dict, output_path):
@@ -320,6 +321,7 @@ def main_detection(path, detection_model_fr, category_index_frame, detection_mod
     # print(check_box, "\n", labels)
     dict_image = crop_image_infor(image_infor, boxes_infor, label_infor)
     image_check_fraud = crop_image_check_fraud(img_cr, check_box, labels, ratio)
+    print(image_check_fraud)
     return dict_image
 
 
